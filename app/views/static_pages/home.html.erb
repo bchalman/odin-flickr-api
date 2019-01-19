@@ -1,0 +1,24 @@
+<h1>Photo-finder</h1>
+
+<div class="form">
+  <%= form_for(:search, method: :get) do |f| %>
+    <%= f.text_field(:user_id, {value: params[:user_id], placeholder: 'Enter a Flickr user ID here', required: true}) %><br>
+    <%= f.submit "Search for photos" %>
+  <% end %>
+</div>
+
+<% unless @username.blank? %>
+  <h2><%=@username%>'s Photos</h2>
+<% end %>
+
+  <div class="display">
+    <% @photos.each do |photo| %>
+    <div class="photo_container">
+      <% begin %>
+        <%= link_to image_tag(photo.url_m), photo.url_m %>
+      <% rescue %>
+        <p>Error accessing user's photos. Please try a different user.</p>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
